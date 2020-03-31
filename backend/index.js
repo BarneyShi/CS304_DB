@@ -81,9 +81,57 @@ app.put('/insert', multerParse.none(), (req,res)=>{
         res.send('You have sucessfully updated a new User')
     })
 })
+//delete users from db
+app.post('/delete',multerParse.none(), (req,res)=>{
+    let sql = 'DELETE FROM users WHERE username = ?';
+    db.query(sql, [req.body.username], (err,result)=>{
+        if(err) throw err;
+        res.send('You have successfully deleted what you want!');
+        console.log('Deleted')
+    })
+})
 
+//selection
+app.post('/select/:username', multerParse.none(),(req,res)=>{
+    let sql = 'SELECT * FROM users WHERE username = ?'
+    db.query(sql, [req.params.username], (err,result)=>{
+        
+        if(err) throw err;
+        res.send(result)
+        console.log(JSON.stringify(result))
+        return result;
+    })
+})
 
+//projection
+app.post('/project', multerParse.none(), (req,res)=>{
+    let sql = 'SELECT u.Name FROM users u, join_group j, groups g WHERE u.Username=j.PublicUsername AND j.GroupID = g.GroupID AND g.Name = ?'
+    db.query(sql, [req.body.name], (err,result)=>{
+        if(err) throw err;
+        res.send(JSON.stringify(result))
+        return result
+    })
+})
 
+//Nested aggregation
+app.post('/aggregate', multerParse.none(),(req,res)=>{
+    let sql = `select AVG(b.Age) As Average_age from birthdays b, users u WHERE  u.Username = b.Username AND u.Username IN (select f.PublicUsername1 from follow_user f WHERE f.PublicUsername2 = ?)`
+    db.query(sql, [req.body.username],(err, result)=>{
+        if(err) throw err;
+        res.send(JSON.stringify(result))
+        return result
+    })
+})
+
+//Divison query
+app.get('/division',multerParse.none(), (req,res)=>{
+    let sql = 'select e.Name from events e WHERE NOT EXISTS (select Username from public_user EXCEPT select u.Username from attend_event a, Users u WHERE u.Username = a.PublicUsername AND e.EventID = a.EventID)'
+    db.query(sql, (err, result)=>{
+        if(err) throw err
+        res.send(JSON.stringify(result))
+        return result
+    })
+})
 
 // db.query('select * from test', (err,result)=>{
 //     if(err) throw err;
