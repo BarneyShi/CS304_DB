@@ -1,8 +1,7 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -25,4 +24,33 @@ h2{
 
 div {
   display: inline-block;
+}
+
+.submitbutton {
+  background-color: #4e9af1;
+  border-radius: 1em;
+  color: white;
+  border-color: transparent;
+  padding: 4px 8px 4px 8px;
+  margin: 5px;
+}
+.submitbutton:hover {
+  border: 1px solid white;
+}
+
+.clearbutton {
+  background-color: #f14e4e;
+  border-radius: 1em;
+  color: white;
+  border-color: transparent;
+  padding: 4px 8px 4px 8px;
+}
+
+input {margin: 3px;}
+
+.json-to-table td {
+  font-family: inherit;
+  font-size: 1.5em;
+  padding: 9px;
+  text-align: center;
 }

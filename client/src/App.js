@@ -87,7 +87,8 @@ handleProjection = event =>{
 }
 
 clearProjectionResult = () =>{
-  localStorage.setItem('selectionDefaultState',0)
+  localStorage.setItem('projectiondefault',0)
+  window.location.reload()
 }
 
 //Handle aggreagation
@@ -121,63 +122,58 @@ handleDivision = event =>{
 
 clearDivisionTable = () =>{
   localStorage.setItem('divisiondefault', 0)
-  window.location.reload()
-
+  window.location.reload(true)
 }
 
   render() {
     return (
       <div>
-      <form style={{'display': 'inline-block'}} >
+      <form onSubmit={this.handleSubmitInsert} style={{'display': 'inline-block'}} >
       <h2>Add New Users</h2>
       <br/>
       <input type="text" placeholder='Username' name='username'/>
-      <br/>
       <input type="text" placeholder='Page ID' name='id'/>
       <br/>
       <input type="text" placeholder='Email' name='email'/>
-      <br/>
       <input type="password" placeholder="Password" name='password'/>
       <br/>
       <input type="text" placeholder="Name" name='name'/>
+      <input type='text' placeholder='Age' name = 'age'/>
       <br/>
       <input type='date' placeholder='Birthday' name='birthday' />
       <br/>
       <input type='text' placeholder='Page Descrption' name='description'/>
-      <br/>
       <input type='text' placeholder='Profile Picture URL' name='picture'/>
       <br/>
-      <button>Submit</button>
+      <button className='submitbutton'>Submit</button>
       </form>
 
       <form onSubmit={this.handleSubmitUpdate}>
       <h2>Update User Info</h2>
       <br/>
       <input type="text" placeholder='Username' name='username'/>
-      <br/>
       <input type="text" placeholder='Page ID' name='id'/>
       <br/>
       <input type="text" placeholder='Email' name='email'/>
-      <br/>
       <input type="password" placeholder="Password" name='password'/>
       <br/>
       <input type="text" placeholder="Name" name='name'/>
+      <input type='text' placeholder='Age' name = 'age'/>
       <br/>
       <input type='date' placeholder='Birthday' name='birthday' />
       <br/>
       <input type='text' placeholder='Page Descrption' name='description'/>
-      <br/>
       <input type='text' placeholder='Profile Picture URL' name='picture'/>
       <br/>
-      <button>Submit</button>
+      <button className='submitbutton'>Submit</button>
       </form>
-      
+      <br/>
       <form onSubmit={this.handleDelete}>
       <h2>Delete Users</h2>
       <br/>
       <input name='username' placeholder='Please enter username' type='text'/>
       <br/>
-      <button>Submit</button>
+      <button className='submitbutton'>Submit</button>
       </form>
 
       <form onSubmit={this.handleSelection}>
@@ -185,44 +181,41 @@ clearDivisionTable = () =>{
       <br/>
       <input id='selection_username' name='username' placeholder='Please enter username' type='text'/>
       <br/>
-      <button>Submit</button>
-      <button onClick={this.clearSelectionResult} >Clear Table</button>
+      <button className='submitbutton'>Submit</button>
+      <button onClick={this.clearSelectionResult} className='clearbutton' >Clear Table</button>
       </form>
-      <br/>
 
       <form onSubmit={this.handleProjection}>
       <h2>List names of a group'users</h2>
       <br/>
       <input name='name' placeholder='Please Enter Group Name' type='text' />
       <br/>
-      <button>Submit</button>
-      <button onClick={this.clearProjectionResult}>Clear Table</button>
+      <button className='submitbutton'>Submit</button>
+      <button onClick={this.clearProjectionResult} className='clearbutton' >Clear Table</button>
       </form>
-      <br/>
 
 
       <form onSubmit={this.handleAggregation}>
       <h2>Average age of a user's followers</h2>
       <br/>
       <input name ='username' placeholder='Please Enter Username' type='text' />
-      <button>Submit</button>
-      <button onClick={this.clearAggregationResult}>Clear</button>
-      </form>
       <br/>
+      <button className='submitbutton'>Submit</button>
+      <button onClick={this.clearAggregationResult} className='clearbutton' >Clear Table</button>
+      </form>
 
 
       <form onSubmit={this.handleDivision}>
         <h2>Get the name of events that all public users attend</h2>
         <br/>
-        <button>Query</button>
-        <br/>
-        <button onClick={this.clearDivisionTable}>Clear Table</button>
+        <button className='submitbutton'>Query</button>
+        <button onClick={this.clearDivisionTable} className='clearbutton' >Clear Table</button>
       </form>
       <br/>
-      {localStorage.getItem('selectionDefaultState') == 1 ? <JsonToTable json={JSON.parse(this.state.selectionstate)} /> : null}
-      {localStorage.getItem('projectiondefault') == 1 ? <JsonToTable json={JSON.parse(this.state.projectionstate)} /> : null}
-      {localStorage.getItem('aggregationdefault') == 1 ? <JsonToTable json={JSON.parse(this.state.aggregationstate)} /> : null}
-      {localStorage.getItem('divisiondefault') == 1 ? <JsonToTable json={JSON.parse(this.state.divisionstate)} /> : null}
+      {parseInt(localStorage.getItem('selectionDefaultState')) === 1 ? <JsonToTable json={JSON.parse(this.state.selectionstate)} /> : null}
+      {parseInt(localStorage.getItem('projectiondefault')) === 1 ? <JsonToTable json={JSON.parse(this.state.projectionstate)} /> : null}
+      {parseInt(localStorage.getItem('aggregationdefault')) === 1 ? <JsonToTable json={JSON.parse(this.state.aggregationstate)} /> : null}
+      {parseInt(localStorage.getItem('divisiondefault')) === 1 ? <JsonToTable json={JSON.parse(this.state.divisionstate)} /> : null}
 
       </div>
     )

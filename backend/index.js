@@ -32,7 +32,8 @@ app.use(bodyParser.urlencoded({
 app.post('/insert', multerParse.none(), (req,res)=>{
     let formdata_1 = {
         username: req.body.username,
-        birthday: req.body.birthday
+        birthday: req.body.birthday,
+        age: req.body.age
     }
     let formdata_2 = {
         username: req.body.username,
@@ -43,7 +44,7 @@ app.post('/insert', multerParse.none(), (req,res)=>{
         page_description: req.body.description,
         profile_picture: req.body.picture
     }
-    let sql_1 = 'INSERT INTO Birthdays SET?';
+    let sql_1 = 'INSERT INTO Birthdays SET ?';
     db.query(sql_1, formdata_1, (err,result) =>{
         if(err) throw err;
     })
@@ -105,7 +106,7 @@ app.post('/select/:username', multerParse.none(),(req,res)=>{
 
 //projection
 app.post('/project', multerParse.none(), (req,res)=>{
-    let sql = 'SELECT u.Name FROM users u, join_group j, groups g WHERE u.Username=j.PublicUsername AND j.GroupID = g.GroupID AND g.Name = ?'
+    let sql = 'SELECT DISTINCT u.Name FROM users u, join_group j, groups g WHERE u.Username=j.PublicUsername AND j.GroupID = g.GroupID AND g.Name = ?'
     db.query(sql, [req.body.name], (err,result)=>{
         if(err) throw err;
         res.send(JSON.stringify(result))
