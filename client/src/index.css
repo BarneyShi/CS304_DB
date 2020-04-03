@@ -11,9 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+table {
+  margin-top: 30px;
+}
 
 form {
-  padding: 3%;
+  padding: 3% 3% 0 3%;
   display: inline-block;
 }
 

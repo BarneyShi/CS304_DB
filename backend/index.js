@@ -114,6 +114,23 @@ app.post('/project', multerParse.none(), (req,res)=>{
     })
 })
 
+//join group
+app.post('/joingroup', multerParse.none(),(req,res)=>{
+    let sql = 'INSERT INTO join_group SET ?'
+    let today = new Date();
+    let formdata = {
+        PublicUsername: req.body.username,
+        GroupID: req.body.groupid,
+        Timestamp: today    
+    }
+    db.query(sql, formdata, (err,result)=>{
+        if (err) throw err;
+        res.send(JSON.stringify(result))
+        console.log('New User added into group')
+    })
+})
+
+
 //Nested aggregation
 app.post('/aggregate', multerParse.none(),(req,res)=>{
     let sql = `select AVG(b.Age) As Average_age from birthdays b, users u WHERE  u.Username = b.Username AND u.Username IN (select f.PublicUsername1 from follow_user f WHERE f.PublicUsername2 = ?)`
@@ -126,7 +143,7 @@ app.post('/aggregate', multerParse.none(),(req,res)=>{
 
 //Divison query
 app.get('/division',multerParse.none(), (req,res)=>{
-    let sql = 'select e.Name from events e WHERE NOT EXISTS (select Username from public_user EXCEPT select u.Username from attend_event a, Users u WHERE u.Username = a.PublicUsername AND e.EventID = a.EventID)'
+    let sql = 'select e.Name from `events` e WHERE NOT EXISTS (select Username from public_user WHERE Username NOT IN (select u.Username from `attend_event` a, `users` u WHERE (u.Username = a.PublicUsername) AND (e.EventID = a.EventID)))'
     db.query(sql, (err, result)=>{
         if(err) throw err
         res.send(JSON.stringify(result))
@@ -144,4 +161,4 @@ const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, ()=>{
     console.log('Listening')
-})
+}) 

@@ -73,6 +73,15 @@ clearSelectionResult = () =>{
   localStorage.setItem('selectionDefaultState',0)
 }
 
+//Add new users into group
+handleNewGroupmember = event =>{
+  const data = new FormData(event.target)
+  fetch('http://localhost:5000/joingroup',{
+    method: 'POST',
+    body: data
+  })
+}
+
 //LIST ALL USERS'NAME OF A GROUP
 handleProjection = event =>{
   const data = new FormData(event.target)
@@ -122,7 +131,7 @@ handleDivision = event =>{
 
 clearDivisionTable = () =>{
   localStorage.setItem('divisiondefault', 0)
-  window.location.reload(true)
+  window.location.reload()
 }
 
   render() {
@@ -168,6 +177,8 @@ clearDivisionTable = () =>{
       <button className='submitbutton'>Submit</button>
       </form>
       <br/>
+
+      
       <form onSubmit={this.handleDelete}>
       <h2>Delete Users</h2>
       <br/>
@@ -185,6 +196,15 @@ clearDivisionTable = () =>{
       <button onClick={this.clearSelectionResult} className='clearbutton' >Clear Table</button>
       </form>
 
+      <form onSubmit={this.handleNewGroupmember}>
+      <h2>Add new users into a group</h2>
+      <br/>
+      <input type='text' name='username' placeholder='Please Enter Username' />
+      <input type='text' name='groupid' placeholder='Please Enter GroupID' />
+      <br/>
+      <button className='submitbutton'>Submit</button>
+      </form>
+
       <form onSubmit={this.handleProjection}>
       <h2>List names of a group'users</h2>
       <br/>
@@ -200,17 +220,19 @@ clearDivisionTable = () =>{
       <br/>
       <input name ='username' placeholder='Please Enter Username' type='text' />
       <br/>
-      <button className='submitbutton'>Submit</button>
-      <button onClick={this.clearAggregationResult} className='clearbutton' >Clear Table</button>
+      <button className='submitbutton'  >Submit</button>
       </form>
+      <br/>
+      <button onClick={this.clearAggregationResult} className='clearbutton' >Clear Table</button>
 
-
+      <br/>
       <form onSubmit={this.handleDivision}>
         <h2>Get the name of events that all public users attend</h2>
         <br/>
         <button className='submitbutton'>Query</button>
-        <button onClick={this.clearDivisionTable} className='clearbutton' >Clear Table</button>
       </form>
+      <br />
+      <button onClick={this.clearDivisionTable} className='clearbutton' >Clear Table</button>
       <br/>
       {parseInt(localStorage.getItem('selectionDefaultState')) === 1 ? <JsonToTable json={JSON.parse(this.state.selectionstate)} /> : null}
       {parseInt(localStorage.getItem('projectiondefault')) === 1 ? <JsonToTable json={JSON.parse(this.state.projectionstate)} /> : null}
