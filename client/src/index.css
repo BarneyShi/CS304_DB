@@ -18,8 +18,7 @@ form {
 }
 
 h2{
-  display: inline-block;
-  width: max-content;
+  width: auto;
 }
 
 .submitbutton {

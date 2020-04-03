@@ -140,6 +140,25 @@ app.post('/aggregate', multerParse.none(),(req,res)=>{
         return result
     })
 })
+//aggregation
+app.get('/aggregation', multerParse.none(), (req,res)=>{
+    let sql = 'select avg(b.age) As Average_age from birthdays b'
+    db.query(sql,(err,result)=>{
+        if(err) throw err;
+        res.send(JSON.stringify(result))
+        return result;
+    })
+})
+
+//new nested aggreagation
+app.get('/nestedaggregation', multerParse.none(), (req,res)=>{
+    let sql = 'select Count(u.username) As User_number_above_average_age from Birthdays b, Users u WHERE u.username = b.username AND b.age > (select avg(birthdays.age) AS avg_age from birthdays)'
+    db.query(sql, (err, result)=>{
+        if(err) throw err;
+        res.send(JSON.stringify(result))
+        return result
+    })
+})
 
 //Divison query
 app.get('/division',multerParse.none(), (req,res)=>{

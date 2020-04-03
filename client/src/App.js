@@ -9,6 +9,7 @@ class App extends Component {
     this.state={
       selectionstate: [localStorage.getItem('newstate')],
       projectionstate: [localStorage.getItem('projectstate')],
+      simpleaggregationstate: [localStorage.getItem('simpleaggregationstate')],
       aggregationstate:[localStorage.getItem('aggregationstate')],
       divisionstate: [localStorage.getItem('divisionstate')]
     }
@@ -99,13 +100,26 @@ clearProjectionResult = () =>{
   localStorage.setItem('projectiondefault',0)
   window.location.reload()
 }
+//handle aggreagation1
+handleSimpleAggreagation = () =>{
+  fetch('http://localhost:5000/aggregation',{
+    method: "GET"
+  }).then(data=>data.json())
+  .then(response=>{
+    localStorage.setItem('simpleaggregationstate', JSON.stringify(response))
+    localStorage.setItem('simpleaggregationdefault',1)
+  })
+}
+
+clearSimpleAggregation = () =>{
+  localStorage.setItem('simpleaggregationdefault',0)
+  window.location.reload() 
+}
 
 //Handle aggreagation
 handleAggregation = event =>{
-  const data = new FormData(event.target)
-  fetch('http://localhost:5000/aggregate',{
-    method: 'POST',
-    body: data
+  fetch('http://localhost:5000/nestedaggregation',{
+    method: 'GET'
   }).then(data=>data.json())
   .then(response => {
     localStorage.setItem('aggregationstate', JSON.stringify(response))
@@ -224,18 +238,22 @@ clearDivisionTable = () =>{
       <button onClick={this.clearProjectionResult} className='clearbutton' >Clear Table</button>
       </form>
 
+      <form onSubmit={this.handleSimpleAggreagation}>
+      <h2>Average age of users</h2>
+      <br/>
+      <button className='submitbutton'>Submit</button>
+      <button onClick={this.clearSimpleAggregation} className='clearbutton' type='button' >Clear Table</button>
+      </form>
 
       <form onSubmit={this.handleAggregation}>
-      <h2>Average age of a user's followers</h2>
-      <br/>
-      <input name ='username' placeholder='Please Enter Username' type='text' />
+      <h2>The Number of users who are above average age</h2>
       <br/>
       <button className='submitbutton'>Submit</button>
       <button onClick={this.clearAggregationResult} className='clearbutton' type='button'>Clear Table</button>
       </form>
 
       <form onSubmit={this.handleDivision}>
-        <h2>Get the name of events that all public users attend</h2>
+        <h2>Get names of events that all public users attend</h2>
         <br/>
         <button className='submitbutton'>Query</button>
       <button onClick={this.clearDivisionTable} className='clearbutton' type='button' >Clear Table</button>
@@ -244,6 +262,8 @@ clearDivisionTable = () =>{
       <div id='tables'>
       {parseInt(localStorage.getItem('selectionDefaultState')) === 1 ? <JsonToTable json={JSON.parse(this.state.selectionstate)} /> : null}
       {parseInt(localStorage.getItem('projectiondefault')) === 1 ? <JsonToTable json={JSON.parse(this.state.projectionstate)} /> : null}
+      {parseInt(localStorage.getItem('simpleaggregationdefault')) === 1 ? <JsonToTable json={JSON.parse(this.state.simpleaggregationstate)} /> : null}
+
       {parseInt(localStorage.getItem('aggregationdefault')) === 1 ? <JsonToTable json={JSON.parse(this.state.aggregationstate)} /> : null}
       {parseInt(localStorage.getItem('divisiondefault')) === 1 ? <JsonToTable json={JSON.parse(this.state.divisionstate)} /> : null}
       </div>
