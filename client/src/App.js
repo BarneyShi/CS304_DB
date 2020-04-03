@@ -137,6 +137,16 @@ clearDivisionTable = () =>{
   render() {
     return (
       <div>
+        <div className='jumbotron'>
+          <img alt='icon' src='database.png' />
+          <h1>
+          iBookSpaceOpiaGram
+          </h1>
+          <p>
+            CPSC304 Group32
+          </p>
+        </div>
+        <br/>
       <form onSubmit={this.handleSubmitInsert} style={{'display': 'inline-block'}} >
       <h2>Add New Users</h2>
       <br/>
@@ -220,24 +230,24 @@ clearDivisionTable = () =>{
       <br/>
       <input name ='username' placeholder='Please Enter Username' type='text' />
       <br/>
-      <button className='submitbutton'  >Submit</button>
+      <button className='submitbutton'>Submit</button>
+      <button onClick={this.clearAggregationResult} className='clearbutton' type='button'>Clear Table</button>
       </form>
-      <br/>
-      <button onClick={this.clearAggregationResult} className='clearbutton' >Clear Table</button>
 
-      <br/>
       <form onSubmit={this.handleDivision}>
         <h2>Get the name of events that all public users attend</h2>
         <br/>
         <button className='submitbutton'>Query</button>
+      <button onClick={this.clearDivisionTable} className='clearbutton' type='button' >Clear Table</button>
       </form>
-      <br />
-      <button onClick={this.clearDivisionTable} className='clearbutton' >Clear Table</button>
       <br/>
+      <div id='tables'>
       {parseInt(localStorage.getItem('selectionDefaultState')) === 1 ? <JsonToTable json={JSON.parse(this.state.selectionstate)} /> : null}
       {parseInt(localStorage.getItem('projectiondefault')) === 1 ? <JsonToTable json={JSON.parse(this.state.projectionstate)} /> : null}
       {parseInt(localStorage.getItem('aggregationdefault')) === 1 ? <JsonToTable json={JSON.parse(this.state.aggregationstate)} /> : null}
       {parseInt(localStorage.getItem('divisiondefault')) === 1 ? <JsonToTable json={JSON.parse(this.state.divisionstate)} /> : null}
+      </div>
+    
 
       </div>
     )

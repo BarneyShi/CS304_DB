@@ -1,32 +1,25 @@
 body {
   margin: 0;
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: Georgia, serif	;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+
 table {
   margin-top: 30px;
 }
 
 form {
-  padding: 3% 3% 0 3%;
+  padding: 0 3% 3% 3%;
   display: inline-block;
 }
 
 h2{
   display: inline-block;
   width: max-content;
-}
-
-div {
-  display: inline-block;
 }
 
 .submitbutton {
@@ -51,9 +44,22 @@ div {
 
 input {margin: 3px;}
 
+#tables {
+  max-width: 10em;
+  text-align: center;
+  margin: 0 auto;
+}
+
 .json-to-table td {
   font-family: inherit;
   font-size: 1.5em;
   padding: 9px;
   text-align: center;
+}
+
+.jumbotron h1 {
+  display: inline-block;
+}
+.jumbotron img {
+  margin-right: 15px;
 }
