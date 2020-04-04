@@ -131,15 +131,15 @@ app.post('/joingroup', multerParse.none(),(req,res)=>{
 })
 
 
-//Nested aggregation
-app.post('/aggregate', multerParse.none(),(req,res)=>{
-    let sql = `select AVG(b.Age) As Average_age from birthdays b, users u WHERE  u.Username = b.Username AND u.Username IN (select f.PublicUsername1 from follow_user f WHERE f.PublicUsername2 = ?)`
-    db.query(sql, [req.body.username],(err, result)=>{
-        if(err) throw err;
-        res.send(JSON.stringify(result))
-        return result
-    })
-})
+// //Nested aggregation
+// app.post('/aggregate', multerParse.none(),(req,res)=>{
+//     let sql = `select AVG(b.Age) As Average_age from birthdays b, users u WHERE  u.Username = b.Username AND u.Username IN (select f.PublicUsername1 from follow_user f WHERE f.PublicUsername2 = ?)`
+//     db.query(sql, [req.body.username],(err, result)=>{
+//         if(err) throw err;
+//         res.send(JSON.stringify(result))
+//         return result
+//     })
+// })
 //aggregation
 app.get('/aggregation', multerParse.none(), (req,res)=>{
     let sql = 'select avg(b.age) As Average_age from birthdays b'
